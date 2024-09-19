@@ -9,6 +9,7 @@ const streamFile = (request, response, filePath, contentType) => {
     if (err) {
       if (err.code === 'ENOENT') {
         response.writeHead(404);
+        return response.end('File not found');
       }
       return response.end(err);
     }
@@ -43,6 +44,8 @@ const streamFile = (request, response, filePath, contentType) => {
     stream.on('error', (streamErr) => {
       response.end(streamErr);
     });
+
+    return stream;
   });
 };
 
